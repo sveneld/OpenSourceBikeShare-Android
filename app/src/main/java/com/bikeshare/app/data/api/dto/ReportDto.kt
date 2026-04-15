@@ -13,7 +13,7 @@ data class DailyReportDto(
 @JsonClass(generateAdapter = true)
 data class UserReportDto(
     @Json(name = "userId") val userId: Int,
-    @Json(name = "username") val username: String,
+    @Json(name = "userName") val username: String,
     @Json(name = "rentCount") val rentCount: Int,
     @Json(name = "returnCount") val returnCount: Int,
     @Json(name = "totalActionCount") val totalActionCount: Int,
