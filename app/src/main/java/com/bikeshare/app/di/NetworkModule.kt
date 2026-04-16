@@ -32,6 +32,12 @@ object NetworkModule {
         tokenRefreshAuthenticator: TokenRefreshAuthenticator,
     ): OkHttpClient {
         val builder = OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .header("User-Agent", "${BuildConfig.APP_NAME}-Android/${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
+                    .build()
+                chain.proceed(request)
+            }
             .addInterceptor(authInterceptor)
             .authenticator(tokenRefreshAuthenticator)
             .connectTimeout(30, TimeUnit.SECONDS)
