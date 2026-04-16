@@ -2,7 +2,7 @@ package com.bikeshare.app.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsBike
+import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
@@ -63,7 +63,7 @@ fun AppNavGraph(
 
     val baseNavItems = listOf(
         BottomNavItem(Screen.Map.route, { Icon(Icons.Default.Map, contentDescription = null) }, R.string.nav_map),
-        BottomNavItem(Screen.Rentals.route, { Icon(Icons.Default.DirectionsBike, contentDescription = null) }, R.string.nav_rentals),
+        BottomNavItem(Screen.Rentals.route, { Icon(Icons.AutoMirrored.Filled.DirectionsBike, contentDescription = null) }, R.string.nav_rentals),
         BottomNavItem(Screen.Profile.route, { Icon(Icons.Default.Person, contentDescription = null) }, R.string.nav_profile),
     )
     val bottomNavItems = if (isAdmin) {

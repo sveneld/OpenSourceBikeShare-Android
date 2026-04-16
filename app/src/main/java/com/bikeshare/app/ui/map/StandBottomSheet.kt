@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsBike
-import androidx.compose.material.icons.filled.KeyboardReturn
+import androidx.compose.material.icons.automirrored.filled.DirectionsBike
+import androidx.compose.material.icons.automirrored.filled.KeyboardReturn
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -57,7 +57,7 @@ fun StandBottomSheet(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
                 ) {
-                    Icon(Icons.Default.KeyboardReturn, contentDescription = null)
+                    Icon(Icons.AutoMirrored.Filled.KeyboardReturn, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
                     Text("${stringResource(R.string.return_button)} #${bike.bikeNum}")
                 }
@@ -118,7 +118,7 @@ private fun BikeItem(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Default.DirectionsBike,
+                    imageVector = Icons.AutoMirrored.Filled.DirectionsBike,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(28.dp),

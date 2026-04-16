@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DirectionsBike
+import androidx.compose.material.icons.automirrored.filled.DirectionsBike
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -58,7 +58,7 @@ fun RentalScreen(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Icon(
-                        Icons.Default.DirectionsBike,
+                        Icons.AutoMirrored.Filled.DirectionsBike,
                         contentDescription = null,
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -114,7 +114,7 @@ private fun RentedBikeCard(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        Icons.Default.DirectionsBike,
+                        Icons.AutoMirrored.Filled.DirectionsBike,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -188,7 +188,7 @@ private fun ReturnBikeDialog(
                         readOnly = true,
                         label = { Text(stringResource(R.string.select_stand)) },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
-                        modifier = Modifier.menuAnchor().fillMaxWidth(),
+                        modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
                     )
                     ExposedDropdownMenu(
                         expanded = expanded,

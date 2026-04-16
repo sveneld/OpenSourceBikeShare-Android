@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.bikeshare.app"
-    compileSdk = 35
+    compileSdk = 36
 
     val tagVersion = (project.findProperty("VERSION_NAME") as? String)?.takeIf { it.isNotBlank() } ?: "1.0.0"
     val commitCount = (project.findProperty("VERSION_CODE") as? String)?.toIntOrNull() ?: 1
@@ -70,8 +70,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 
     buildFeatures {
