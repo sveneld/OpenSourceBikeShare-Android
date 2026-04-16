@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
@@ -8,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.bikeshare.app"
-    compileSdk = 35
+    compileSdk = 36
 
     val tagVersion = (project.findProperty("VERSION_NAME") as? String)?.takeIf { it.isNotBlank() } ?: "1.0.0"
     val commitCount = (project.findProperty("VERSION_CODE") as? String)?.toIntOrNull() ?: 1
@@ -70,13 +69,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         compose = true
         buildConfig = true
+        resValues = true
     }
 
     lint {

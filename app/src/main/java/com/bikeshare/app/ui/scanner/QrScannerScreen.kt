@@ -2,7 +2,6 @@ package com.bikeshare.app.ui.scanner
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.util.Size
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.camera.core.CameraSelector
@@ -102,7 +101,13 @@ fun QrScannerScreen(
                             val barcodeScanner = BarcodeScanning.getClient()
 
                             val imageAnalysis = ImageAnalysis.Builder()
-                                .setTargetResolution(Size(1280, 720))
+                                .setResolutionSelector(
+                                    androidx.camera.core.resolutionselector.ResolutionSelector.Builder()
+                                        .setAspectRatioStrategy(
+                                            androidx.camera.core.resolutionselector.AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
+                                        )
+                                        .build()
+                                )
                                 .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
                                 .build()
                                 .also { analysis ->
