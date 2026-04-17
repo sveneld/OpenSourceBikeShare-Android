@@ -1,5 +1,7 @@
 package com.bikeshare.app.ui.navigation
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.DirectionsBike
@@ -12,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.ui.res.stringResource
@@ -60,6 +63,26 @@ fun AppNavGraph(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val isAdmin by appViewModel.isAdmin.collectAsStateWithLifecycle(initialValue = false)
+    val updateInfo by appViewModel.updateInfo.collectAsStateWithLifecycle(initialValue = null)
+    val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
+
+    LaunchedEffect(updateInfo) {
+        val info = updateInfo ?: return@LaunchedEffect
+        val result = snackbarHostState.showSnackbar(
+            message = context.getString(R.string.update_available, info.latestVersion),
+            actionLabel = context.getString(R.string.update_download),
+            withDismissAction = true,
+            duration = SnackbarDuration.Long,
+        )
+        if (result == SnackbarResult.ActionPerformed) {
+            context.startActivity(
+                Intent(Intent.ACTION_VIEW, Uri.parse(info.releaseUrl))
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+            )
+        }
+        appViewModel.dismissUpdate()
+    }
 
     val baseNavItems = listOf(
         BottomNavItem(Screen.Map.route, { Icon(Icons.Default.Map, contentDescription = null) }, R.string.nav_map),
@@ -86,6 +109,7 @@ fun AppNavGraph(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         bottomBar = {
             if (showBottomBar) {
                 NavigationBar {

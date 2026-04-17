@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bikeshare.app.domain.repository.RentalRepository
+import com.bikeshare.app.domain.update.UpdateChecker
+import com.bikeshare.app.domain.update.UpdateInfo
 import com.bikeshare.app.notification.FreeTimeNotificationScheduler
 import com.bikeshare.app.util.NetworkResult
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -18,10 +20,24 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val rentalRepository: RentalRepository,
+    private val updateChecker: UpdateChecker,
 ) : ViewModel() {
 
     private val _isAdmin = MutableStateFlow(false)
     val isAdmin: StateFlow<Boolean> = _isAdmin.asStateFlow()
+
+    private val _updateInfo = MutableStateFlow<UpdateInfo?>(null)
+    val updateInfo: StateFlow<UpdateInfo?> = _updateInfo.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            _updateInfo.value = updateChecker.checkForUpdate()
+        }
+    }
+
+    fun dismissUpdate() {
+        _updateInfo.value = null
+    }
 
     fun loadLimits() {
         viewModelScope.launch {
