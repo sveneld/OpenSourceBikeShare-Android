@@ -129,6 +129,7 @@ dependencies {
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.view)
     implementation(libs.mlkit.barcode)
+    implementation(libs.play.services.code.scanner)
 
     // Storage
     implementation(libs.datastore.preferences)
