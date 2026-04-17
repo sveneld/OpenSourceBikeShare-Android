@@ -29,9 +29,10 @@ class AppViewModel @Inject constructor(
     private val _updateInfo = MutableStateFlow<UpdateInfo?>(null)
     val updateInfo: StateFlow<UpdateInfo?> = _updateInfo.asStateFlow()
 
-    init {
+    fun checkForUpdate() {
         viewModelScope.launch {
-            _updateInfo.value = updateChecker.checkForUpdate()
+            val info = updateChecker.checkForUpdate() ?: return@launch
+            _updateInfo.value = info
         }
     }
 
