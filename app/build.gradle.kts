@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.sentry.android)
 }
 
 android {
@@ -154,4 +155,25 @@ dependencies {
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
+}
+
+sentry {
+    org.set("whitebikes")
+    projectName.set("android")
+    authToken.set(System.getenv("SENTRY_AUTH_TOKEN") ?: "")
+
+    // Upload ProGuard/R8 mapping files for release builds so obfuscated stack
+    // traces become readable in Sentry.
+    includeProguardMapping.set(true)
+    autoUploadProguardMapping.set(true)
+
+    // Upload source context so Sentry can show the actual lines of code
+    // where an exception was thrown.
+    includeSourceContext.set(true)
+    autoUploadSourceContext.set(true)
+
+    // Don't upload anything for debug builds.
+    ignoredBuildTypes.set(setOf("debug"))
+
+    telemetry.set(false)
 }
