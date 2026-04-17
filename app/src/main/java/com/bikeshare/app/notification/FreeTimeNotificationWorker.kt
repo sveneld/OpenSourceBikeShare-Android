@@ -47,10 +47,10 @@ class FreeTimeNotificationWorker(
     }
 
     private fun buildOpenRentalsIntent(context: Context, bikeNumber: Int): PendingIntent {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            putExtra(EXTRA_NAVIGATE_TO, DESTINATION_RENTALS)
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
+        val intent = Intent(context, MainActivity::class.java)
+        intent.setPackage(context.packageName)
+        intent.putExtra(EXTRA_NAVIGATE_TO, DESTINATION_RENTALS)
+        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
         return PendingIntent.getActivity(
             context,
             bikeNumber,
