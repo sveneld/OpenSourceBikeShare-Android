@@ -122,4 +122,8 @@
     <string name="admin_value">Value: %1$s</string>
     <string name="admin_status">Status: %1$s</string>
     <string name="admin_code_label">Code: %1$s</string>
+
+    <!-- Update notification -->
+    <string name="update_available">New version %1$s available</string>
+    <string name="update_download">Download</string>
 </resources>

@@ -122,4 +122,8 @@
     <string name="admin_value">Номінал: %1$s</string>
     <string name="admin_status">Статус: %1$s</string>
     <string name="admin_code_label">Код: %1$s</string>
+
+    <!-- Update notification -->
+    <string name="update_available">Доступна нова версія %1$s</string>
+    <string name="update_download">Завантажити</string>
 </resources>

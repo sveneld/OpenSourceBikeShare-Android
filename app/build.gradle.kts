@@ -28,11 +28,14 @@ android {
         val apiBaseUrl = (project.findProperty("API_BASE_URL") as? String)?.takeIf { it.isNotBlank() } ?: "https://whitebikes.info/api/v1/"
 
         val sentryDsn = (project.findProperty("SENTRY_DSN") as? String)?.takeIf { it.isNotBlank() } ?: ""
+        val updateCheckUrl = (project.findProperty("UPDATE_CHECK_URL") as? String)?.takeIf { it.isNotBlank() }
+            ?: "https://api.github.com/repos/cyklokoalicia/OpenSourceBikeShare-Android/releases/latest"
 
         buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
         buildConfigField("String", "APP_NAME", "\"$appName\"")
         buildConfigField("String", "LOGO_URL", "\"$logoUrl\"")
         buildConfigField("String", "SENTRY_DSN", "\"$sentryDsn\"")
+        buildConfigField("String", "UPDATE_CHECK_URL", "\"$updateCheckUrl\"")
 
         resValue("string", "app_name", appName)
     }
