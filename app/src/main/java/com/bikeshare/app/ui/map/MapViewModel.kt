@@ -1,5 +1,6 @@
 package com.bikeshare.app.ui.map
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bikeshare.app.data.api.dto.BikeOnStandDto
@@ -9,9 +10,11 @@ import com.bikeshare.app.data.api.dto.StandMarkerDto
 import com.bikeshare.app.data.api.dto.UserLimitsDto
 import com.bikeshare.app.domain.repository.RentalRepository
 import com.bikeshare.app.domain.repository.StandRepository
+import com.bikeshare.app.notification.FreeTimeNotificationScheduler
 import com.bikeshare.app.util.NetworkResult
 import com.bikeshare.app.util.buildReturnDisplayMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +36,7 @@ data class MapUiState(
 
 @HiltViewModel
 class MapViewModel @Inject constructor(
+    @ApplicationContext private val appContext: Context,
     private val standRepository: StandRepository,
     private val rentalRepository: RentalRepository,
 ) : ViewModel() {
@@ -144,6 +148,7 @@ class MapViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(isLoading = true)
             when (val result = rentalRepository.returnBike(bikeNumber, standName, null)) {
                 is NetworkResult.Success -> {
+                    FreeTimeNotificationScheduler.cancelForBike(appContext, bikeNumber)
                     val msg = buildReturnDisplayMessage(result.data, standName)
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,

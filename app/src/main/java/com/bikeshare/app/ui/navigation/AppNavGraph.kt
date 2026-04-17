@@ -27,6 +27,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.bikeshare.app.R
+import com.bikeshare.app.notification.FreeTimeNotificationWorker
 import com.bikeshare.app.ui.auth.LoginScreen
 import com.bikeshare.app.ui.auth.PhoneVerifyScreen
 import com.bikeshare.app.ui.auth.RegisterScreen
@@ -58,6 +59,8 @@ data class BottomNavItem(
 @Composable
 fun AppNavGraph(
     appViewModel: AppViewModel = hiltViewModel(),
+    navigateTo: String? = null,
+    onNavigationConsumed: () -> Unit = {},
 ) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -66,6 +69,23 @@ fun AppNavGraph(
     val updateInfo by appViewModel.updateInfo.collectAsStateWithLifecycle(initialValue = null)
     val snackbarHostState = remember { SnackbarHostState() }
     val context = LocalContext.current
+
+    LaunchedEffect(navigateTo) {
+        when (navigateTo) {
+            FreeTimeNotificationWorker.DESTINATION_RENTALS -> {
+                navController.navigate(Screen.Rentals.route) {
+                    launchSingleTop = true
+                    popUpTo(navController.graph.findStartDestination().id) {
+                        saveState = true
+                    }
+                    restoreState = true
+                }
+                onNavigationConsumed()
+            }
+            null -> Unit
+            else -> onNavigationConsumed()
+        }
+    }
 
     LaunchedEffect(updateInfo) {
         val info = updateInfo ?: return@LaunchedEffect
