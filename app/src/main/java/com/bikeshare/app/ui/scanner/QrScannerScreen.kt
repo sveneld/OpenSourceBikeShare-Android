@@ -42,6 +42,7 @@ fun QrScannerScreen(
     onQrDetected: (String) -> Unit,
 ) {
     val context = LocalContext.current
+    val fallbackErrorMessage = stringResource(R.string.qr_scan_instruction)
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
@@ -70,7 +71,7 @@ fun QrScannerScreen(
                 ) {
                     onBack()
                 } else {
-                    errorMessage = e.message ?: context.getString(R.string.qr_scan_instruction)
+                    errorMessage = e.message ?: fallbackErrorMessage
                 }
             }
     }

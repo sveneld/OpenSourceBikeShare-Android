@@ -37,6 +37,7 @@ import com.bikeshare.app.ui.auth.PhoneVerifyScreen
 import com.bikeshare.app.ui.auth.RegisterScreen
 import com.bikeshare.app.ui.map.MapScreen
 import com.bikeshare.app.ui.rental.RentalScreen
+import com.bikeshare.app.ui.about.AboutScreen
 import com.bikeshare.app.ui.profile.ProfileScreen
 import com.bikeshare.app.ui.credit.CreditScreen
 import com.bikeshare.app.ui.credithistory.CreditHistoryScreen
@@ -102,13 +103,19 @@ fun AppNavGraph(
         }
     }
 
+    val updateAvailableMessage = updateInfo?.let {
+        stringResource(R.string.update_available, it.latestVersion)
+    }
+    val updateDownloadLabel = stringResource(R.string.update_download)
+
     LaunchedEffect(updateInfo) {
         val info = updateInfo ?: return@LaunchedEffect
+        val message = updateAvailableMessage ?: return@LaunchedEffect
         val result = snackbarHostState.showSnackbar(
-            message = context.getString(R.string.update_available, info.latestVersion),
-            actionLabel = context.getString(R.string.update_download),
+            message = message,
+            actionLabel = updateDownloadLabel,
             withDismissAction = true,
-            duration = SnackbarDuration.Long,
+            duration = SnackbarDuration.Indefinite,
         )
         if (result == SnackbarResult.ActionPerformed) {
             context.startActivity(
@@ -215,6 +222,7 @@ fun AppNavGraph(
                     onNavigateToCredit = { navController.navigate(Screen.Credit.route) },
                     onNavigateToCreditHistory = { navController.navigate(Screen.CreditHistory.route) },
                     onNavigateToTrips = { navController.navigate(Screen.Trips.route) },
+                    onNavigateToAbout = { navController.navigate(Screen.About.route) },
                     onLogout = {
                         navController.navigate(Screen.Login.route) {
                             popUpTo(0) { inclusive = true }
@@ -233,6 +241,10 @@ fun AppNavGraph(
 
             composable(Screen.Trips.route) {
                 TripsScreen(onBack = { navController.popBackStack() })
+            }
+
+            composable(Screen.About.route) {
+                AboutScreen(onBack = { navController.popBackStack() })
             }
 
             composable(Screen.QrScanner.route) {
