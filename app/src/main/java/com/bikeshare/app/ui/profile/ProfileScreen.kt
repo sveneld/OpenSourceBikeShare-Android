@@ -22,6 +22,7 @@ fun ProfileScreen(
     onNavigateToCredit: () -> Unit,
     onNavigateToCreditHistory: () -> Unit,
     onNavigateToTrips: () -> Unit,
+    onNavigateToAbout: () -> Unit,
     onLogout: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
@@ -143,6 +144,15 @@ fun ProfileScreen(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.recent_trips))
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedButton(
+                onClick = onNavigateToAbout,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                Text(stringResource(R.string.about_menu))
             }
 
             if (uiState.isLoading) {
