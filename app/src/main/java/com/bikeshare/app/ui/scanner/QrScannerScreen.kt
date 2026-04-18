@@ -65,12 +65,16 @@ fun QrScannerScreen(
                 onBack()
             }
             .addOnFailureListener { e ->
-                Timber.e(e, "QR scanner failed")
-                if (e is com.google.android.gms.common.api.ApiException &&
+                val isUserCancel = e is com.google.android.gms.common.api.ApiException &&
                     e.statusCode == CommonStatusCodes.CANCELED
-                ) {
+                if (isUserCancel) {
+                    // Expected: user closed the system scanner. No log.
                     onBack()
                 } else {
+                    // Scanner failed in an expected way (MLKit init, module not installed,
+                    // camera unavailable, etc.). Don't spam Sentry with errors — warn and
+                    // show the user a friendly message instead.
+                    Timber.w(e, "QR scanner failed")
                     errorMessage = e.message ?: fallbackErrorMessage
                 }
             }
