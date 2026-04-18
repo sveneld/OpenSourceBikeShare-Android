@@ -27,3 +27,12 @@
 
 # Sentry
 -dontwarn io.sentry.**
+
+# ML Kit + Google Code Scanner (reflection-based component registrars)
+-keep class com.google.mlkit.** { *; }
+-keep class com.google.android.gms.internal.mlkit_** { *; }
+-keep class com.google.android.gms.vision.** { *; }
+-keep class com.google.firebase.components.** { *; }
+-keepclassmembers class com.google.mlkit.** {
+    <init>(...);
+}
