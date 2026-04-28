@@ -9,7 +9,7 @@ import com.bikeshare.app.domain.repository.RentalRepository
 import com.bikeshare.app.domain.repository.StandRepository
 import com.bikeshare.app.notification.FreeTimeNotificationScheduler
 import com.bikeshare.app.util.NetworkResult
-import com.bikeshare.app.util.buildReturnDisplayMessage
+import com.bikeshare.app.util.RentMessageRenderer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +30,7 @@ class RentalViewModel @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val rentalRepository: RentalRepository,
     private val standRepository: StandRepository,
+    private val messageRenderer: RentMessageRenderer,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RentalUiState())
@@ -81,14 +82,22 @@ class RentalViewModel @Inject constructor(
                     FreeTimeNotificationScheduler.cancelForBike(appContext, bikeNumber)
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        returnResult = buildReturnDisplayMessage(result.data, standName),
+                        returnResult = messageRenderer.renderFromDto(
+                            result.data.code,
+                            result.data.params,
+                            fallback = result.data.message,
+                        ),
                     )
                     loadRentedBikes()
                 }
                 is NetworkResult.Error -> {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        error = result.message,
+                        error = messageRenderer.render(
+                            result.messageCode,
+                            result.messageParams,
+                            fallback = result.message,
+                        ),
                     )
                 }
                 is NetworkResult.Loading -> {}

@@ -136,4 +136,32 @@
     <string name="admin_coupon_copied">Kupón skopírovaný</string>
     <string name="about_checking_update">Kontroluje sa aktualizácia…</string>
     <string name="about_up_to_date">Máte najnovšiu verziu</string>
+
+    <!-- API messages from server (rent/return/revert flows). Names mirror server translation codes. -->
+    <string name="api_bike_rent_success">Bicykel #%1$d: Otvoriť kódom %2$s. Okamžite zmeňte kód na %3$s (otvoriť, otočiť kovovú časť, nastaviť nový kód, otočiť kovovú časť späť).</string>
+    <string name="api_bike_rent_success_note_appendix">\nNahlásený problém: %1$s</string>
+    <string name="api_bike_return_success">Bicykel #%1$d vrátený na stojan %2$s. Zamknúť kódom %3$s. Pri odchode otočte zámok na 0000. Ak je bicykel špinavý, prosím utrite ho.</string>
+    <string name="api_bike_return_success_note_appendix">\nNahlásili ste tento problém: %1$s.</string>
+    <string name="api_bike_return_success_credit_appendix">\nZmena kreditu: -%1$s%2$s.</string>
+    <string name="api_bike_revert_success">Bicykel #%1$d vrátený na %2$s s kódom %3$s.</string>
+
+    <string name="api_bike_rent_error_not_found">Bicykel #%1$d neexistuje.</string>
+    <string name="api_bike_rent_error_already_rented_by_current_user">Už ste si požičali bicykel #%1$d. Kód je %2$s.</string>
+    <string name="api_bike_rent_error_already_rented">Bicykel #%1$d je už požičaný.</string>
+    <string name="api_bike_rent_error_insufficient_credit">Máte menej ako požadovaný kredit %1$s%2$s. Prosím, dobite si kredit.</string>
+    <string name="api_bike_rent_error_zero_limit">Nemôžete si požičať žiadne bicykle. Kontaktujte administrátorov, aby zrušili zákaz.</string>
+    <string name="api_bike_rent_error_service_stand">Požičiavanie zo servisných stojanov nie je povolené: Bicykel pravdepodobne čaká na opravu.</string>
+    <string name="api_bike_rent_error_stack_top_bike">Bicykel #%1$d momentálne nie je možné si požičať, musíte si požičať bicykel #%2$d z tohto stojanu.</string>
+    <plurals name="api_bike_rent_error_limit">
+        <item quantity="one">Môžete si naraz požičať len %d bicykel.</item>
+        <item quantity="few">Môžete si naraz požičať len %d bicykle.</item>
+        <item quantity="many">Môžete si naraz požičať len %d bicykla.</item>
+        <item quantity="other">Môžete si naraz požičať len %d bicyklov.</item>
+    </plurals>
+
+    <string name="api_bike_return_error_stand_not_found">Názov stojanu \'%1$s\' neexistuje. Stojany sú označené VEĽKÝMI PÍSMENAMI.</string>
+    <string name="api_bike_return_error_no_rented_bikes">Momentálne nemáte požičané žiadne bicykle.</string>
+
+    <string name="api_bike_revert_error_not_rented">Bicykel #%1$d momentálne nie je požičaný. Vrátenie neúspešné!</string>
+    <string name="api_bike_revert_error_no_stand_or_code">Pre bicykel #%1$d nebol nájdený posledný stojan alebo kód. Vrátenie neúspešné!</string>
 </resources>

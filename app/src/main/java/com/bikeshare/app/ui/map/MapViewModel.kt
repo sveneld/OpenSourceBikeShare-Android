@@ -12,7 +12,7 @@ import com.bikeshare.app.domain.repository.RentalRepository
 import com.bikeshare.app.domain.repository.StandRepository
 import com.bikeshare.app.notification.FreeTimeNotificationScheduler
 import com.bikeshare.app.util.NetworkResult
-import com.bikeshare.app.util.buildReturnDisplayMessage
+import com.bikeshare.app.util.RentMessageRenderer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import timber.log.Timber
@@ -31,6 +31,7 @@ data class MapUiState(
     val error: String? = null,
     val rentResult: String? = null,
     val rentCodeInfo: RentSystemResultDto? = null,
+    val rentCodeMessage: String? = null,
     val returnResult: String? = null,
 )
 
@@ -39,6 +40,7 @@ class MapViewModel @Inject constructor(
     @ApplicationContext private val appContext: Context,
     private val standRepository: StandRepository,
     private val rentalRepository: RentalRepository,
+    private val messageRenderer: RentMessageRenderer,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(MapUiState())
@@ -126,6 +128,11 @@ class MapViewModel @Inject constructor(
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
                         rentCodeInfo = result.data,
+                        rentCodeMessage = messageRenderer.renderFromDto(
+                            result.data.code,
+                            result.data.params,
+                            fallback = result.data.message,
+                        ),
                     )
                     _uiState.value.selectedStand?.let { loadStandBikes(it.standName) }
                     loadStandMarkers()
@@ -135,7 +142,11 @@ class MapViewModel @Inject constructor(
                 is NetworkResult.Error -> {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        error = result.message,
+                        error = messageRenderer.render(
+                            result.messageCode,
+                            result.messageParams,
+                            fallback = result.message,
+                        ),
                     )
                 }
                 is NetworkResult.Loading -> {}
@@ -149,10 +160,13 @@ class MapViewModel @Inject constructor(
             when (val result = rentalRepository.returnBike(bikeNumber, standName, null)) {
                 is NetworkResult.Success -> {
                     FreeTimeNotificationScheduler.cancelForBike(appContext, bikeNumber)
-                    val msg = buildReturnDisplayMessage(result.data, standName)
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        returnResult = msg,
+                        returnResult = messageRenderer.renderFromDto(
+                            result.data.code,
+                            result.data.params,
+                            fallback = result.data.message,
+                        ),
                     )
                     _uiState.value.selectedStand?.let { loadStandBikes(it.standName) }
                     loadStandMarkers()
@@ -162,7 +176,11 @@ class MapViewModel @Inject constructor(
                 is NetworkResult.Error -> {
                     _uiState.value = _uiState.value.copy(
                         isLoading = false,
-                        error = result.message,
+                        error = messageRenderer.render(
+                            result.messageCode,
+                            result.messageParams,
+                            fallback = result.message,
+                        ),
                     )
                 }
                 is NetworkResult.Loading -> {}
@@ -179,7 +197,7 @@ class MapViewModel @Inject constructor(
     }
 
     fun clearRentCodeInfo() {
-        _uiState.value = _uiState.value.copy(rentCodeInfo = null)
+        _uiState.value = _uiState.value.copy(rentCodeInfo = null, rentCodeMessage = null)
     }
 
     fun clearReturnResult() {

@@ -22,7 +22,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bikeshare.app.R
 import com.bikeshare.app.notification.FreeTimeNotificationScheduler
-import com.bikeshare.app.util.buildRentDisplayText
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -245,7 +244,7 @@ fun MapScreen(
                 title = { Text(stringResource(R.string.rent_button)) },
                 text = {
                     Column {
-                        Text(buildRentDisplayText(rentInfo))
+                        uiState.rentCodeMessage?.takeIf { it.isNotBlank() }?.let { Text(it) }
                         rentInfo.params?.currentCode?.let {
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(

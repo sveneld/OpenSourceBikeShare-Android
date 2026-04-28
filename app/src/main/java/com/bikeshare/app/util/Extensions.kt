@@ -32,6 +32,8 @@ suspend fun <T> safeApiCall(
             NetworkResult.Error(
                 message = detail?.detail ?: "HTTP ${response.code()}: ${response.message()}",
                 code = response.code(),
+                messageCode = detail?.code,
+                messageParams = detail?.params,
             )
         }
     } catch (e: Exception) {

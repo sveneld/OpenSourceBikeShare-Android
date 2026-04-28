@@ -25,4 +25,6 @@ data class ProblemDetail(
     @Json(name = "detail") val detail: String,
     @Json(name = "instance") val instance: String,
     @Json(name = "requestId") val requestId: String,
+    @Json(name = "code") val code: String? = null,
+    @Json(name = "params") val params: Map<String, Any?>? = null,
 )

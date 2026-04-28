@@ -57,4 +57,10 @@ data class RentSystemParamsDto(
     @Json(name = "note") val note: String? = null,
     @Json(name = "creditChange") val creditChange: Double? = null,
     @Json(name = "creditCurrency") val creditCurrency: String? = null,
+    @Json(name = "hasNote") val hasNote: String? = null,
+    @Json(name = "hasCreditChange") val hasCreditChange: String? = null,
+    @Json(name = "code") val code: String? = null,
+    @Json(name = "minRequiredCredit") val minRequiredCredit: Double? = null,
+    @Json(name = "count") val count: Int? = null,
+    @Json(name = "stackTopBike") val stackTopBike: Int? = null,
 )

@@ -136,4 +136,30 @@
     <string name="admin_coupon_copied">Coupon copied to clipboard</string>
     <string name="about_checking_update">Checking for updates…</string>
     <string name="about_up_to_date">You have the latest version</string>
+
+    <!-- API messages from server (rent/return/revert flows). Names mirror server translation codes. -->
+    <string name="api_bike_rent_success">Bike #%1$d: Open with code %2$s. Change code immediately to %3$s (open, rotate metal part, set new code, rotate metal part back).</string>
+    <string name="api_bike_rent_success_note_appendix">\nReported issue: %1$s</string>
+    <string name="api_bike_return_success">Bike #%1$d returned to stand %2$s. Lock with code %3$s. Please, rotate the lockpad to 0000 when leaving. Wipe the bike clean if it is dirty, please.</string>
+    <string name="api_bike_return_success_note_appendix">\nYou have also reported this problem: %1$s.</string>
+    <string name="api_bike_return_success_credit_appendix">\nCredit change: -%1$s%2$s.</string>
+    <string name="api_bike_revert_success">Bike #%1$d reverted to %2$s with code %3$s.</string>
+
+    <string name="api_bike_rent_error_not_found">Bike #%1$d does not exist.</string>
+    <string name="api_bike_rent_error_already_rented_by_current_user">You have already rented the bike #%1$d. Code is %2$s.</string>
+    <string name="api_bike_rent_error_already_rented">Bike #%1$d is already rented.</string>
+    <string name="api_bike_rent_error_insufficient_credit">You are below required credit %1$s%2$s. Please, recharge your credit.</string>
+    <string name="api_bike_rent_error_zero_limit">You can not rent any bikes. Contact the admins to lift the ban.</string>
+    <string name="api_bike_rent_error_service_stand">Renting from service stands is not allowed: The bike probably waits for a repair.</string>
+    <string name="api_bike_rent_error_stack_top_bike">Bike #%1$d is not rentable now, you have to rent bike #%2$d from this stand.</string>
+    <plurals name="api_bike_rent_error_limit">
+        <item quantity="one">You can only rent %d bike at once.</item>
+        <item quantity="other">You can only rent %d bikes at once.</item>
+    </plurals>
+
+    <string name="api_bike_return_error_stand_not_found">Stand name \'%1$s\' does not exist. Stands are marked by CAPITAL LETTERS.</string>
+    <string name="api_bike_return_error_no_rented_bikes">You currently have no rented bikes.</string>
+
+    <string name="api_bike_revert_error_not_rented">Bicycle #%1$d is not rented right now. Revert not successful!</string>
+    <string name="api_bike_revert_error_no_stand_or_code">No last stand or code for bicycle #%1$d found. Revert not successful!</string>
 </resources>

@@ -136,4 +136,32 @@
     <string name="admin_coupon_copied">Купон скопійовано</string>
     <string name="about_checking_update">Перевірка оновлень…</string>
     <string name="about_up_to_date">У вас остання версія</string>
+
+    <!-- API messages from server (rent/return/revert flows). Names mirror server translation codes. -->
+    <string name="api_bike_rent_success">Велосипед №%1$d: відкрити кодом %2$s. Негайно змініть код на %3$s (відкрити, повернути металеву частину, встановити новий код, повернути металеву частину назад).</string>
+    <string name="api_bike_rent_success_note_appendix">\nПовідомлена проблема: %1$s</string>
+    <string name="api_bike_return_success">Велосипед №%1$d повернуто на стоянку %2$s. Заблокуйте кодом %3$s. Будь ласка, при від\'їзді поверніть замок на 0000. Якщо велосипед брудний, протріть його.</string>
+    <string name="api_bike_return_success_note_appendix">\nВи також повідомили про цю проблему: %1$s.</string>
+    <string name="api_bike_return_success_credit_appendix">\nЗміна кредиту: -%1$s%2$s.</string>
+    <string name="api_bike_revert_success">Велосипед №%1$d повернуто на %2$s з кодом %3$s.</string>
+
+    <string name="api_bike_rent_error_not_found">Велосипед №%1$d не існує.</string>
+    <string name="api_bike_rent_error_already_rented_by_current_user">Ви вже орендували велосипед №%1$d. Код: %2$s.</string>
+    <string name="api_bike_rent_error_already_rented">Велосипед №%1$d вже орендовано.</string>
+    <string name="api_bike_rent_error_insufficient_credit">Ваш кредит менший за необхідний %1$s%2$s. Будь ласка, поповніть кредит.</string>
+    <string name="api_bike_rent_error_zero_limit">Ви не можете орендувати велосипеди. Зверніться до адміністраторів, щоб зняти заборону.</string>
+    <string name="api_bike_rent_error_service_stand">Оренда зі сервісних стоянок не дозволена: велосипед, ймовірно, чекає на ремонт.</string>
+    <string name="api_bike_rent_error_stack_top_bike">Велосипед №%1$d зараз неможливо орендувати, ви маєте орендувати велосипед №%2$d з цієї стоянки.</string>
+    <plurals name="api_bike_rent_error_limit">
+        <item quantity="one">Ви можете орендувати одночасно лише %d велосипед.</item>
+        <item quantity="few">Ви можете орендувати одночасно лише %d велосипеди.</item>
+        <item quantity="many">Ви можете орендувати одночасно лише %d велосипедів.</item>
+        <item quantity="other">Ви можете орендувати одночасно лише %d велосипедів.</item>
+    </plurals>
+
+    <string name="api_bike_return_error_stand_not_found">Назва стоянки \'%1$s\' не існує. Стоянки позначені ВЕЛИКИМИ ЛІТЕРАМИ.</string>
+    <string name="api_bike_return_error_no_rented_bikes">У вас зараз немає орендованих велосипедів.</string>
+
+    <string name="api_bike_revert_error_not_rented">Велосипед №%1$d зараз не орендований. Скасування неуспішне!</string>
+    <string name="api_bike_revert_error_no_stand_or_code">Для велосипеда №%1$d не знайдено останньої стоянки або коду. Скасування неуспішне!</string>
 </resources>
